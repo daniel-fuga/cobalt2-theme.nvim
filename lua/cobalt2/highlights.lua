@@ -106,7 +106,7 @@ local function syntax()
 		StorageClass = { fg = p.light_orange },
 		Structure = { fg = p.blue, italic = true },
 		Typedef = { fg = p.orange },
-		Special = { fg = p.light_green },
+		Special = { fg = p.fg },
 		SpecialChar = { fg = p.pink },
 		Tag = { fg = p.light_blue },
 		Delimiter = { fg = p.dirty_blue },
