@@ -82,7 +82,7 @@ end
 local function syntax()
 	return {
 		Comment = { fg = p.blue, italic = true },
-		Constant = { fg = p.light_green },
+		Constant = { fg = p.light_pink },
 		String = { fg = p.light_green },
 		Character = { fg = p.pink },
 		Number = { fg = p.pink },
