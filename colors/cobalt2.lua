@@ -6,7 +6,13 @@
 vim.cmd.highlight("clear")
 vim.o.background = "dark"
 vim.g.colors_name = "cobalt2"
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
+	end,
+})
 
+-- TODO: tar
 local palette = require("cobalt2.palette")
 local groups = require("cobalt2.highlights")
 local p = palette
@@ -21,12 +27,12 @@ local syntax = {
 	Identifier = { fg = p.orange },
 	Function = { fg = p.orange },
 	Statement = { fg = p.fg },
-	Conditional = { fg = p.orange },
+	Conditional = { fg = p.orange, italic = true },
 	Repeat = { fg = p.pink },
 	Label = { fg = p.yellow },
-	Operator = { fg = p.blue },
+	Operator = { fg = p.orange, bold = true, italic = true },
 	Keyword = { fg = p.orange, italic = true },
-	Exception = { fg = p.orange, italic = true },
+	Exception = { fg = p.orange, italic = true, bold = true },
 	PreProc = { fg = p.orange },
 	Include = { fg = p.pink, italic = true },
 	Define = { fg = p.orange, italic = true },
@@ -34,7 +40,7 @@ local syntax = {
 	PreCondit = { fg = p.orange },
 	Type = { fg = p.yellow },
 	StorageClass = { fg = p.light_orange },
-	Structure = { fg = p.blue, italic = true },
+	Structure = { fg = p.pink, italic = true, bold = true },
 	Typedef = { fg = p.orange },
 	Special = { fg = p.fg },
 	SpecialChar = { fg = p.pink },
@@ -47,7 +53,7 @@ local syntax = {
 	Title = { fg = p.green, bold = true },
 	Strikethrough = { fg = p.grey, strikethrough = true },
 	Rainbow1 = { fg = p.error, bold = true },
-	Rainbow2 = { fg = p.orange, bold = true },
+	Rainbow2 = { fg = p.orange, bold = true, italic = true },
 	Rainbow3 = { fg = p.yellow, bold = true },
 	Rainbow4 = { fg = p.green, bold = true },
 	Rainbow5 = { fg = p.blue, bold = true },
@@ -141,7 +147,7 @@ local links = {
 	["@keyword.export"] = "Keyword",
 	["@keyword.conditional"] = "Conditional",
 	["@keyword.conditional.ternary"] = "Operator",
-	["@keyword.repeat"] = "Repeat",
+	["@keyword.repeat"] = "Rainbow2",
 	["@keyword.type"] = "Structure",
 	["@keyword.exception"] = "Exception",
 	["@keyword.debug"] = "Debug",
@@ -226,3 +232,7 @@ for name, target in pairs(links) do
 end
 
 vim.g.terminal_ansi_colors = palette.ansi
+vim.cmd([[
+      syn match Cobalt2Todo +\c\<\(TODO\|FIXME\|NOTE\|HACK\|XXX\)\>+ contained containedin=Comment
+      hi def link Cobalt2Todo Todo
+      ]])
